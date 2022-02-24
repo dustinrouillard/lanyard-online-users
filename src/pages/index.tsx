@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Color from 'color-thief-react';
+import { Palette } from 'color-thief-react';
 
 import { UserProfile } from '../types/dcdn';
 import { LanyardPresence } from '../types/lanyard';
@@ -85,11 +85,11 @@ export default function Home() {
 
               return (
                 <Card>
-                  <Color src={`https://cdn.discordapp.com/avatars/${id}/${user.discord_user.avatar}`} crossOrigin="anonymous" format="hex">
+                  <Palette src={`https://cdn.discordapp.com/avatars/${id}/${user.discord_user.avatar}`} crossOrigin="anonymous" format="hex" colorCount={4}>
                     {({ data, loading, error }) => (
                       <>
                         {!!profile.user.banner && <UserBanner src={`https://cdn.discordapp.com/banners/${id}/${profile.user.banner}?size=300`} />}
-                        {!profile.user.banner && <UserNoBanner fill={profile.user.banner_color ? profile.user.banner_color : data ? data : '#6e6e6e'} />}
+                        {!profile.user.banner && <UserNoBanner fill={profile.user.banner_color ? profile.user.banner_color : data && data[3] ? data[3] : '#6e6e6e'} />}
                         <UserAvatar src={`https://cdn.discordapp.com/avatars/${id}/${user.discord_user.avatar}`}></UserAvatar>
                         <UserStatus status={user.discord_status} />
                         <BottomContent>
@@ -105,7 +105,7 @@ export default function Home() {
                         </BottomContent>
                       </>
                     )}
-                  </Color>
+                  </Palette>
                 </Card>
               );
             })}
