@@ -94,7 +94,8 @@ export default function Home() {
                         <UserStatus status={user.discord_status} />
                         <BottomContent>
                           <Username>
-                            {user.discord_user.username}#{user.discord_user.discriminator}
+                            {user.discord_user.username}
+                            <Discriminator>#{user.discord_user.discriminator}</Discriminator>
                           </Username>
                           <BadgeDisplay>
                             {flags.map((flag) => (
@@ -216,6 +217,14 @@ const Username = styled.h2`
   color: #000000;
   font-size: 1.2rem;
   margin-left: 20px;
+  display: flex;
+`;
+
+const Discriminator = styled.h2`
+  color: #000000;
+  opacity: 0.6;
+  font-size: 1.2rem;
+  margin: 0;
 `;
 
 const Badge = styled.img`
