@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Color from 'color-thief-react';
+
 import { UserProfile } from '../types/dcdn';
 import { LanyardPresence } from '../types/lanyard';
 import { Badges, getFlags } from '../utils/flags';
@@ -12,6 +14,8 @@ const WatchedUsers = [
   '156114103033790464', // Dustin
   '338718840873811979', // pxseu
   '83281345949728768', // Tim
+  '819287687121993768', // Lanyard
+  '911655061594202192', // Shoko Makinohara
 ];
 
 export default function Home() {
@@ -81,21 +85,27 @@ export default function Home() {
 
               return (
                 <Card>
-                  {!!profile.user.banner && <UserBanner src={`https://cdn.discordapp.com/banners/${id}/${profile.user.banner}?size=300`} />}
-                  {!profile.user.banner && <UserNoBanner fill={profile.user.banner_color || '#000000'} />}
-                  <UserAvatar src={`https://cdn.discordapp.com/avatars/${id}/${user.discord_user.avatar}`}></UserAvatar>
-                  <UserStatus status={user.discord_status} />
-                  <BottomContent>
-                    <Username>
-                      {user.discord_user.username}#{user.discord_user.discriminator}
-                    </Username>
-                    <BadgeDisplay>
-                      {flags.map((flag) => (
-                        <Badge src={`data:image/png;base64,${Badges[flag]}`} />
-                      ))}
-                      {hasNitro && <Badge src={`data:image/png;base64,${Badges.Nitro_Subscriber}`} />}
-                    </BadgeDisplay>
-                  </BottomContent>
+                  <Color src={`https://cdn.discordapp.com/avatars/${id}/${user.discord_user.avatar}`} crossOrigin="anonymous" format="hex">
+                    {({ data, loading, error }) => (
+                      <>
+                        {!!profile.user.banner && <UserBanner src={`https://cdn.discordapp.com/banners/${id}/${profile.user.banner}?size=300`} />}
+                        {!profile.user.banner && <UserNoBanner fill={profile.user.banner_color ? profile.user.banner_color : data ? data : '#6e6e6e'} />}
+                        <UserAvatar src={`https://cdn.discordapp.com/avatars/${id}/${user.discord_user.avatar}`}></UserAvatar>
+                        <UserStatus status={user.discord_status} />
+                        <BottomContent>
+                          <Username>
+                            {user.discord_user.username}#{user.discord_user.discriminator}
+                          </Username>
+                          <BadgeDisplay>
+                            {flags.map((flag) => (
+                              <Badge src={`data:image/png;base64,${Badges[flag]}`} />
+                            ))}
+                            {hasNitro && <Badge src={`data:image/png;base64,${Badges.Nitro_Subscriber}`} />}
+                          </BadgeDisplay>
+                        </BottomContent>
+                      </>
+                    )}
+                  </Color>
                 </Card>
               );
             })}
@@ -205,7 +215,7 @@ const UserNoBanner = styled.div<{ fill?: string }>`
 const Username = styled.h2`
   color: #000000;
   font-size: 1.2rem;
-  margin-left: 25px;
+  margin-left: 20px;
 `;
 
 const Badge = styled.img`
