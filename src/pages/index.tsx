@@ -77,6 +77,7 @@ export default function Home() {
               if (!profile) return;
 
               const flags = getFlags(user.discord_user.public_flags);
+              const hasNitro = profile.premium_since;
 
               return (
                 <Card>
@@ -92,6 +93,7 @@ export default function Home() {
                       {flags.map((flag) => (
                         <Badge src={`data:image/png;base64,${Badges[flag]}`} />
                       ))}
+                      {hasNitro && <Badge src={`data:image/png;base64,${Badges.Nitro_Subscriber}`} />}
                     </BadgeDisplay>
                   </BottomContent>
                 </Card>
