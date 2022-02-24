@@ -31,6 +31,7 @@ export interface Lanyard {
   users: Map<string, LanyardPresence>;
 
   on(event: 'change', listener: (users: Map<string, LanyardPresence>) => void): this;
+  on(event: 'presence', listener: (presence: LanyardPresence) => void): this;
 }
 
 export class Lanyard extends EventEmitter {
@@ -81,11 +82,13 @@ export class Lanyard extends EventEmitter {
           case Event.INIT_STATE: {
             this.users = new Map(Object.entries(data.d));
             this.emit('change', this.users);
+            for (const user of Object.values(data.d)) this.emit('presence', user);
             break;
           }
           case Event.PRESENCE_UPDATE:
             this.users.set(data.d.discord_user.id, data.d as LanyardPresence);
             this.emit('change', this.users);
+            this.emit('presence', data.d);
 
             break;
 
