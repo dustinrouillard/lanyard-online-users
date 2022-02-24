@@ -17,7 +17,6 @@ export default function Home() {
   const [totalUsers, setTotalUsers] = useState<Number>(0);
 
   function usersChange(users: Map<string, LanyardPresence>) {
-    console.log(users.size);
     setTotalUsers(users.size);
     setOnlineUsers([...users.values()].filter((user) => user.discord_status != 'offline').length);
   }
