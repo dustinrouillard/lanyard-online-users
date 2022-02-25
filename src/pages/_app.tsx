@@ -1,4 +1,4 @@
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -10,14 +10,11 @@ const GlobalStyle = createGlobalStyle`
       sans-serif;
   }
 
-  * {
-    box-sizing: border-box;
-  }
 `;
 
 const theme = {
   colors: {
-    primary: "#0070f3",
+    primary: '#0070f3',
   },
 };
 

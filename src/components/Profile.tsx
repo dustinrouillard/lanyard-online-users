@@ -17,20 +17,26 @@ export function Profile({ flags, user, profile }: ProfileProps) {
       <Palette src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`} crossOrigin="anonymous" format="hex" colorCount={4}>
         {({ data }) => (
           <>
-            {!!profile.user.banner && <UserBanner src={`https://cdn.discordapp.com/banners/${user.discord_user.id}/${profile.user.banner}?size=300`} />}
-            {!profile.user.banner && <UserNoBanner fill={profile.user.banner_color ? profile.user.banner_color : data && data[3] ? data[3] : '#6e6e6e'} />}
-            <UserAvatar src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`}></UserAvatar>
-            <UserStatus status={user.discord_status} />
-            <BottomContent>
-              <Username>
-                {user.discord_user.username}
-                <Discriminator>#{user.discord_user.discriminator}</Discriminator>
-              </Username>
+            <Heading>
+              {!!profile.user.banner && <UserBanner src={`https://cdn.discordapp.com/banners/${user.discord_user.id}/${profile.user.banner}?size=300`} />}
+              {!profile.user.banner && <UserNoBanner fill={profile.user.banner_color ? profile.user.banner_color : data && data[3] ? data[3] : '#6e6e6e'} />}
+            </Heading>
+            <TopContent>
+              <Avatar>
+                <UserAvatar src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`}></UserAvatar>
+                <UserStatus status={user.discord_status} />
+              </Avatar>
               <BadgeDisplay>
                 {flags.map((flag) => (
                   <Badge src={`/badges/${flag}.svg`} />
                 ))}
               </BadgeDisplay>
+            </TopContent>
+            <BottomContent>
+              <Username>
+                {user.discord_user.username}
+                <Discriminator>#{user.discord_user.discriminator}</Discriminator>
+              </Username>
             </BottomContent>
             {user.activities.length > 0 && user.activities.find((activity) => activity.type == 4) && (
               <CustomStatus>
@@ -67,9 +73,10 @@ const UserAvatar = styled.img`
   width: 100px;
   height: auto;
   border-radius: 50%;
-  margin-left: 20px;
+  margin-left: 15px;
   margin-top: -50px;
   border: 3px solid #ffffff;
+  z-index: 6;
 `;
 
 const UserStatus = styled.div<{ status: string }>`
@@ -78,23 +85,24 @@ const UserStatus = styled.div<{ status: string }>`
   height: 23px;
   border-radius: 50%;
   border: 3px solid #ffffff;
-  margin-left: 98px;
+  margin-left: 84px;
   margin-top: -25px;
+  z-index: 6;
 `;
 
 const UserBanner = styled.img`
   height: 128px;
   width: 300px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
 `;
 
 const UserNoBanner = styled.div<{ fill?: string }>`
   height: 128px;
   width: 300px;
   background-color: ${(props) => (props.fill ? props.fill : '')};
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
 `;
 
 const Username = styled.h2`
@@ -121,7 +129,10 @@ const BadgeDisplay = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 15px;
+  max-width: 140px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 `;
 
 const CustomStatus = styled.p`
@@ -143,7 +154,25 @@ const UnicodeEmoji = styled.p`
   margin-right: 5px;
 `;
 
+const Avatar = styled.div`
+  display: flex;
+  flex-direction: column;
+  z-index: 8;
+`;
+
+const Heading = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const TopContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const BottomContent = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: -5px;
 `;
