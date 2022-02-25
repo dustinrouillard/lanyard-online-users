@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { UserProfile } from '../types/dcdn';
 import { LanyardPresence } from '../types/lanyard';
-import { getFlags } from '../utils/flags';
+import { processFlags } from '../utils/flags';
 import { lanyard } from '../utils/lanyard';
 import { Profile } from '../components/Profile';
 
@@ -79,10 +79,9 @@ export default function Home() {
               const profile = userProfiles.find((profile) => profile.user.id == id);
               if (!profile || !user) return;
 
-              const flags = getFlags(user.discord_user.public_flags);
-              const nitroSince = profile.premium_since;
+              const flags = processFlags(user.discord_user.public_flags, !!profile.premium_since);
 
-              return <Profile flags={flags} nitroSince={nitroSince} profile={profile} user={user} />;
+              return <Profile flags={flags} profile={profile} user={user} />;
             })}
         </Grid>
       </Main>

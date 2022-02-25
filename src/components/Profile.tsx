@@ -3,21 +3,19 @@ import { Palette } from 'color-thief-react';
 
 import { UserProfile } from '../types/dcdn';
 import { LanyardPresence } from '../types/lanyard';
-import { Badges } from '../utils/flags';
 import { Bio } from './Bio';
 
 interface ProfileProps {
   flags: string[];
   user: LanyardPresence;
   profile: UserProfile;
-  nitroSince: string;
 }
 
-export function Profile({ flags, user, profile, nitroSince }: ProfileProps) {
+export function Profile({ flags, user, profile }: ProfileProps) {
   return (
     <Card>
       <Palette src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`} crossOrigin="anonymous" format="hex" colorCount={4}>
-        {({ data, loading, error }) => (
+        {({ data }) => (
           <>
             {!!profile.user.banner && <UserBanner src={`https://cdn.discordapp.com/banners/${user.discord_user.id}/${profile.user.banner}?size=300`} />}
             {!profile.user.banner && <UserNoBanner fill={profile.user.banner_color ? profile.user.banner_color : data && data[3] ? data[3] : '#6e6e6e'} />}
@@ -30,9 +28,8 @@ export function Profile({ flags, user, profile, nitroSince }: ProfileProps) {
               </Username>
               <BadgeDisplay>
                 {flags.map((flag) => (
-                  <Badge src={`data:image/png;base64,${Badges[flag]}`} />
+                  <Badge src={`/badges/${flag}.svg`} />
                 ))}
-                {!!nitroSince && <Badge src={`data:image/png;base64,${Badges.Nitro_Subscriber}`} />}
               </BadgeDisplay>
             </BottomContent>
             {user.activities.length > 0 && user.activities.find((activity) => activity.type == 4) && (
@@ -58,7 +55,7 @@ const Card = styled.div`
   flex-basis: 20%;
   color: inherit;
   display: flex;
-  /* min-height: 450px; */
+  width: 300px;
   flex-direction: column;
   text-decoration: none;
   border: 1px solid #eaeaea;
