@@ -1,13 +1,12 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Palette } from 'color-thief-react';
 
 import { UserProfile } from '../types/dcdn';
 import { LanyardPresence } from '../types/lanyard';
-import { Badges, getFlags } from '../utils/flags';
-
+import { getFlags } from '../utils/flags';
 import { lanyard } from '../utils/lanyard';
+import { Profile } from '../components/Profile';
 
 const WatchedUsers = [
   '94490510688792576', // Phineas
@@ -78,37 +77,12 @@ export default function Home() {
             WatchedUsers.map((id) => {
               const user = lanyard.users.get(id);
               const profile = userProfiles.find((profile) => profile.user.id == id);
-              if (!profile) return;
+              if (!profile || !user) return;
 
               const flags = getFlags(user.discord_user.public_flags);
-              const hasNitro = profile.premium_since;
+              const nitroSince = profile.premium_since;
 
-              return (
-                <Card>
-                  <Palette src={`https://cdn.discordapp.com/avatars/${id}/${user.discord_user.avatar}`} crossOrigin="anonymous" format="hex" colorCount={4}>
-                    {({ data, loading, error }) => (
-                      <>
-                        {!!profile.user.banner && <UserBanner src={`https://cdn.discordapp.com/banners/${id}/${profile.user.banner}?size=300`} />}
-                        {!profile.user.banner && <UserNoBanner fill={profile.user.banner_color ? profile.user.banner_color : data && data[3] ? data[3] : '#6e6e6e'} />}
-                        <UserAvatar src={`https://cdn.discordapp.com/avatars/${id}/${user.discord_user.avatar}`}></UserAvatar>
-                        <UserStatus status={user.discord_status} />
-                        <BottomContent>
-                          <Username>
-                            {user.discord_user.username}
-                            <Discriminator>#{user.discord_user.discriminator}</Discriminator>
-                          </Username>
-                          <BadgeDisplay>
-                            {flags.map((flag) => (
-                              <Badge src={`data:image/png;base64,${Badges[flag]}`} />
-                            ))}
-                            {hasNitro && <Badge src={`data:image/png;base64,${Badges.Nitro_Subscriber}`} />}
-                          </BadgeDisplay>
-                        </BottomContent>
-                      </>
-                    )}
-                  </Palette>
-                </Card>
-              );
+              return <Profile flags={flags} nitroSince={nitroSince} profile={profile} user={user} />;
             })}
         </Grid>
       </Main>
@@ -143,7 +117,7 @@ const Main = styled.div`
 const Title = styled.h1`
   margin: 0;
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 3rem;
   text-align: center;
 `;
 
@@ -159,90 +133,12 @@ const Grid = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 
-  max-width: 800px;
+  max-width: 1024px;
 
   @media (max-width: 600px) {
     width: 100%;
     flex-direction: column;
   }
-`;
-
-const Card = styled.div`
-  margin: 1rem;
-  flex-basis: 20%;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-`;
-
-const UserAvatar = styled.img`
-  width: 100px;
-  height: auto;
-  border-radius: 50%;
-  margin-left: 20px;
-  margin-top: -50px;
-  border: 3px solid #ffffff;
-`;
-
-const UserStatus = styled.div<{ status: string }>`
-  background-color: ${({ status }) => (status == 'dnd' ? 'red' : status == 'idle' ? 'yellow' : status == 'online' ? 'green' : 'grey')};
-  width: 23px;
-  height: 23px;
-  border-radius: 50%;
-  border: 3px solid #ffffff;
-  margin-left: 98px;
-  margin-top: -25px;
-`;
-
-const UserBanner = styled.img`
-  height: 128px;
-  width: 300px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-`;
-
-const UserNoBanner = styled.div<{ fill?: string }>`
-  height: 128px;
-  width: 300px;
-  background-color: ${(props) => (props.fill ? props.fill : '')};
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-`;
-
-const Username = styled.h2`
-  color: #000000;
-  font-size: 1.2rem;
-  margin-left: 20px;
-  display: flex;
-`;
-
-const Discriminator = styled.h2`
-  color: #000000;
-  opacity: 0.6;
-  font-size: 1.2rem;
-  margin: 0;
-`;
-
-const Badge = styled.img`
-  width: 20px;
-  height: 20px;
-  margin: 0 0 0 4px;
-`;
-
-const BadgeDisplay = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-right: 20px;
-`;
-
-const BottomContent = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const Footer = styled.div`

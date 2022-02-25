@@ -33,6 +33,7 @@ interface Assets {
 }
 
 interface Emoji {
+  id: string;
   name: string;
 }
 
