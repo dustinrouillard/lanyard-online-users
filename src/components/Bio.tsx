@@ -77,4 +77,12 @@ const Holder = styled.div`
     padding: 0px 2px 0px 2px;
     font-size: smaller;
   }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
 `;
