@@ -48,7 +48,7 @@ export function Bio({ bio }: { bio: string }) {
 
   return (
     <Container>
-      <Heading>About:</Heading>
+      <Heading>About</Heading>
       <Holder dangerouslySetInnerHTML={{ __html: data }} />
     </Container>
   );
