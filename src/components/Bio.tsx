@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import rehypeExternalLinks from 'rehype-external-links';
 
 import rehypeStringify from 'rehype-stringify';
 import remarkBreaks from 'remark-breaks';
@@ -38,7 +39,14 @@ export function Bio({ bio }: { bio: string }) {
         text = text.replace(match[0], `\`${formatter.format(new Date(~~timestamp * 1000))}\``);
       }
     }
-    const file = await unified().use(remarkParse).use(remarkBreaks).use(remarkGfm).use(remarkRehype).use(rehypeStringify).process(text);
+    const file = await unified()
+      .use(remarkParse)
+      .use(remarkBreaks)
+      .use(remarkGfm)
+      .use(remarkRehype)
+      .use(rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer', 'nofollow'] })
+      .use(rehypeStringify)
+      .process(text);
     setData(file.toString());
   }
 
