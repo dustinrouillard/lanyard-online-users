@@ -72,6 +72,11 @@ export default function Home() {
         </Title>
 
         <Description>Watched Users</Description>
+        <Description no-margin smaller lighter>
+          <Link href="https://github.com/dustinrouillard/lanyard-online-users" target="_blank" rel="noopener noreferrer">
+            If you want to add yourself submit a PR
+          </Link>
+        </Description>
 
         <Grid>
           {lanyard.users &&
@@ -125,10 +130,12 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-const Description = styled.p`
+const Description = styled.p<{ smaller?: boolean; 'no-margin'?: boolean; lighter?: boolean }>`
   line-height: 1.5;
-  font-size: 2.5rem;
   text-align: center;
+  opacity: ${({ lighter }) => (lighter ? '0.7' : '1')};
+  font-size: ${({ smaller }) => (smaller ? '1.4rem' : '2.2rem')};
+  margin: ${(props) => (props['no-margin'] ? '0 0 0 0' : '30px 0 0 0')};
 `;
 
 const Grid = styled.div`
