@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import rehypeExternalLinks from 'rehype-external-links';
 
+import rehypeExternalLinks from 'rehype-external-links';
 import rehypeStringify from 'rehype-stringify';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
