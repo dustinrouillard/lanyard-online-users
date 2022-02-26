@@ -63,15 +63,18 @@ export function Profile({ flags, user, profile }: ProfileProps) {
                 <Discriminator>#{user.discord_user.discriminator}</Discriminator>
               </Username>
             </BottomContent>
-            {user.activities.length > 0 && user.activities.find((activity) => activity.type == 4) && (
-              <CustomStatus>
+            {user.activities.length > 0 && user.activities.find((activity) => [0, 1, 2, 3, 4].includes(activity.type)) && (
+              <UserStatus>
                 {user.activities.find((activity) => activity.type == 4)?.emoji?.id ? (
                   <CustomEmoji src={`https://cdn.discordapp.com/emojis/${user.activities.find((activity) => activity.type == 4)?.emoji?.id}`} />
                 ) : (
-                  <UnicodeEmoji>{user.activities.find((activity) => activity.type == 4)?.emoji?.name}</UnicodeEmoji>
+                  user.activities.find((activity) => activity.type == 4)?.emoji?.name && (
+                    <UnicodeEmoji>{user.activities.find((activity) => activity.type == 4)?.emoji?.name}</UnicodeEmoji>
+                  )
                 )}
                 {user.activities.find((activity) => activity.type == 4)?.state}
-              </CustomStatus>
+                {user.activities.find((activity) => [0, 1, 2, 3].includes(activity.type) && !activity.details && !activity.application_id)?.name}
+              </UserStatus>
             )}
             {profile.user.bio && <Bio bio={profile.user.bio} />}
             <Activity user={user} />
@@ -163,7 +166,7 @@ const BadgeDisplay = styled.div`
   flex-wrap: wrap;
 `;
 
-const CustomStatus = styled.p`
+const UserStatus = styled.p`
   font-size: 0.9rem;
   margin: 0;
   margin-left: 15px;
