@@ -30,7 +30,7 @@ export function Profile({ flags, user, profile }: ProfileProps) {
             </Heading>
             <TopContent>
               <AvatarDiv>
-                <svg width="138" height="100" viewBox="0 0 138 100" aria-hidden="true">
+                <svg width="128" height="100" viewBox="0 0 138 100" aria-hidden="true">
                   <foreignObject
                     x="0"
                     y="0"
@@ -39,14 +39,14 @@ export function Profile({ flags, user, profile }: ProfileProps) {
                     mask={`url(#${user.active_on_discord_mobile && user.discord_status == 'online' ? 'svg-mask-avatar-status-mobile' : 'svg-mask-avatar-status-round'})`}
                   >
                     <Avatar>
-                      <img src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`} />
+                      <img height="100px" width="100px" src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`} />
                     </Avatar>
                   </foreignObject>
                   {!user.active_on_discord_mobile && (
                     <rect width="24" height="24" x="71" y="71" fill={StatusMap[user.discord_status]} mask={`url(#svg-mask-status-${user.discord_status})`} />
                   )}
                   {user.active_on_discord_mobile && user.discord_status == 'online' && (
-                    <rect width="24" height="36" x="71" y="60" fill="hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)" mask="url(#svg-mask-status-online-mobile)" />
+                    <rect width="24" height="36" x="71" y="60" fill={StatusMap[user.discord_status]} mask="url(#svg-mask-status-online-mobile)" />
                   )}
                 </svg>
               </AvatarDiv>
