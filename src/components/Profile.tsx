@@ -101,6 +101,7 @@ const Card = styled.div`
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   padding-bottom: 20px;
+  align-self: flex-start;
 
   @media (prefers-color-scheme: dark) {
     border: 1px solid #262626;
