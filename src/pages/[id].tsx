@@ -51,6 +51,11 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (prefers-color-scheme: dark) {
+    background: #000000;
+    color: #ffffff;
+  }
 `;
 
 const Main = styled.div`
@@ -69,6 +74,10 @@ const Footer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (prefers-color-scheme: dark) {
+    border-top: 1px solid #262626;
+  }
 `;
 
 const Link = styled.a`

@@ -25,7 +25,12 @@ export function Bio({ bio }: { bio: string }) {
   const [data, setData] = useState<string>();
 
   async function parse(bio: string) {
-    let text = bio.replace(/_  _/g, '&nbsp;&nbsp;').replace(/\\/g, '');
+    let text = bio
+      .replace(/_  _/g, '&nbsp;&nbsp;')
+      .replace(/\\/g, '')
+      .replace(/(?:<?.:\S*:)(\d*)(?:>)/g, `![](https://cdn.discordapp.com/emojis/$1)`);
+
+    // Timestamps
     const matches = [...text.matchAll(/<t:([0-9]*):([[A-Za-z]|\*])>/g)];
     for (const match of matches) {
       const timestamp = match[1];
@@ -84,6 +89,11 @@ const Holder = styled.div`
     border-radius: 3px;
     padding: 0px 2px 0px 2px;
     font-size: smaller;
+  }
+
+  img {
+    height: 16px;
+    margin-bottom: -2px;
   }
 
   a {

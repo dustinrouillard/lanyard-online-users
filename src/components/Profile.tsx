@@ -25,7 +25,7 @@ export function Profile({ flags, user, profile }: ProfileProps) {
         {({ data }) => (
           <>
             <Heading>
-              {!!profile.user.banner && <UserBanner src={`https://cdn.discordapp.com/banners/${user.discord_user.id}/${profile.user.banner}?size=300`} />}
+              {!!profile.user.banner && <UserBanner src={`https://cdn.discordapp.com/banners/${user.discord_user.id}/${profile.user.banner}?size=600`} />}
               {!profile.user.banner && <UserNoBanner fill={profile.user.banner_color ? profile.user.banner_color : data && data[3] ? data[3] : '#6e6e6e'} />}
             </Heading>
             <TopContent>

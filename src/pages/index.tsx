@@ -152,9 +152,10 @@ const Footer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   @media (prefers-color-scheme: dark) {
     border-top: 1px solid #262626;
-  };
+  }
 `;
 
 const Link = styled.a`
