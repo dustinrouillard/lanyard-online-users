@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { LanyardPresence } from '../types/lanyard';
 import { msToTime } from '../utils/time';
+import { Missing } from './Icons/Missing';
 
 interface ActivityProps {
   user: LanyardPresence;
@@ -10,10 +11,10 @@ interface ActivityProps {
 
 export function Activity(props: ActivityProps) {
   const [timestamp, setTimestamp] = useState<number>(new Date().getTime());
-  const [currentActivity, setCurrentActivity] = useState(props.user.activities.filter((activity) => activity.type == 0 && activity.assets)[0]);
+  const [currentActivity, setCurrentActivity] = useState(props.user.activities.filter((activity) => activity.type == 0 && activity.timestamps)[0]);
 
   useEffect(() => {
-    const activity = props.user.activities.filter((activity) => activity.type == 0 && activity.assets)[0];
+    const activity = props.user.activities.filter((activity) => activity.type == 0 && activity.timestamps)[0];
     if (activity) {
       setCurrentActivity(activity);
       const int = setInterval(() => {
@@ -31,15 +32,18 @@ export function Activity(props: ActivityProps) {
       <ContainerHeading>Activity</ContainerHeading>
       <Content>
         <LeftSide>
-          <ActivityImage
-            mask={!!currentActivity.assets.small_image}
-            src={
-              currentActivity.assets.large_image.startsWith('mp:external')
-                ? currentActivity.assets.large_image.replace(/mp:external\/([^\/]*)\/(http[s])/g, '$2:/')
-                : `https://cdn.discordapp.com/app-assets/${currentActivity.application_id}/${currentActivity.assets.large_image}.webp`
-            }
-          />
-          {currentActivity.assets.small_image && (
+          {currentActivity.assets && (
+            <ActivityImage
+              mask={!!currentActivity.assets?.small_image}
+              src={
+                currentActivity.assets.large_image.startsWith('mp:external')
+                  ? currentActivity.assets.large_image.replace(/mp:external\/([^\/]*)\/(http[s])/g, '$2:/')
+                  : `https://cdn.discordapp.com/app-assets/${currentActivity.application_id}/${currentActivity.assets.large_image}.webp`
+              }
+            />
+          )}
+          {!currentActivity.assets && <Missing width={70} height={70} />}
+          {currentActivity.assets?.small_image && (
             <ActivitySmallImage
               src={
                 currentActivity.assets.small_image.startsWith('mp:external')
@@ -99,7 +103,7 @@ const ActivityImage = styled.img<{ mask?: boolean }>`
   width: 70px;
   height: 70px;
   border-radius: 10px;
-  mask: ${({ mask }) => (mask ? `url('/masks/5af5e97267f80928790a8c0a1228a8cbb6c29815.svg')` : '')};
+  mask: ${({ mask }) => (mask ? `url('/masks/67803835a442f7847488205585023c028d9c80ac.svg')` : '')};
   mask-size: cover;
 `;
 
