@@ -89,6 +89,10 @@ const Holder = styled.div`
     border-radius: 3px;
     padding: 0px 2px 0px 2px;
     font-size: smaller;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: #f4f4f430;
+    }
   }
 
   img {
