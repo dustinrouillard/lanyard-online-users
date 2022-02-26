@@ -16,6 +16,7 @@ const WatchedUsers = [
   '819287687121993768', // Lanyard
   '911655061594202192', // Shoko Makinohara
   '218972931701735424', // Voltages
+  '597170794111434753' // stealthwave
 ];
 
 export default function Home() {
