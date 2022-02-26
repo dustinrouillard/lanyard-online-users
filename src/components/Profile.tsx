@@ -73,7 +73,11 @@ export function Profile({ flags, user, profile }: ProfileProps) {
                   )
                 )}
                 {user.activities.find((activity) => activity.type == 4)?.state}
-                {user.activities.find((activity) => [0, 1, 2, 3].includes(activity.type) && !activity.details && !activity.application_id)?.name}
+                {
+                  user.activities.find(
+                    (activity) => [0, 1, 2, 3].includes(activity.type) && !user.activities.find((activity) => activity.type == 4) && !activity.details && !activity.application_id,
+                  )?.name
+                }
               </UserStatus>
             )}
             {profile.user.bio && <Bio bio={profile.user.bio} />}
