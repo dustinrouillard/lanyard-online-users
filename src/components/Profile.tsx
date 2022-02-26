@@ -91,16 +91,17 @@ const Card = styled.div`
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
+
   @media (prefers-color-scheme: dark) {
     border: 1px solid #262626;
-  } ;
+  }
 `;
 
 const AvatarDiv = styled.div`
   border-radius: 50%;
   width: 100px;
   height: 100px;
-  margin-left: 10px;
+  margin-left: 15px;
   margin-top: -50px;
   z-index: 6;
 `;
@@ -125,9 +126,10 @@ const Username = styled.h2`
   font-size: 1.2rem;
   margin-left: 20px;
   display: flex;
+
   @media (prefers-color-scheme: dark) {
     color: #ffffff;
-  } ;
+  }
 `;
 
 const Discriminator = styled.h2`
@@ -135,9 +137,10 @@ const Discriminator = styled.h2`
   opacity: 0.6;
   font-size: 1.2rem;
   margin: 0;
+
   @media (prefers-color-scheme: dark) {
     color: #ffffff;
-  } ;
+  }
 `;
 
 const Badge = styled.img`
@@ -151,7 +154,8 @@ const BadgeDisplay = styled.div`
   flex-direction: row;
   align-items: center;
   margin-right: 15px;
-  max-width: 140px;
+  margin-top: 10px;
+  max-width: 240px;
   justify-content: flex-end;
   flex-wrap: wrap;
 `;
