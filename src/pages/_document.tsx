@@ -1,6 +1,6 @@
-import React from "react";
-import Document, { Head, Html, Main, NextScript } from "next/document";
-import { ServerStyleSheet } from "styled-components";
+import React from 'react';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document<any> {
   static async getInitialProps(ctx) {
@@ -11,8 +11,7 @@ export default class MyDocument extends Document<any> {
       // wraps the collectStyles provider around our <App />.
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />),
+          enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
         });
 
       // extract the initial props that may be present.
@@ -36,7 +35,10 @@ export default class MyDocument extends Document<any> {
   render() {
     return (
       <Html>
-        <Head>{this.props.styleTags}</Head>
+        <Head>
+          {this.props.styleTags}
+          <meta name="darkreader" content="NO-DARKREADER-PLUGIN" />
+        </Head>
         <body>
           <Main />
           <NextScript />

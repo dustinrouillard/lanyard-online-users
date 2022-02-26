@@ -11,6 +11,13 @@ interface ProfileProps {
   profile: UserProfile;
 }
 
+const StatusMap = {
+  dnd: 'hsl(359, calc(var(--saturation-factor, 1) * 82.6%), 59.4%)',
+  online: 'hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)',
+  idle: 'hsl(38, calc(var(--saturation-factor, 1) * 95.7%), 54.1%)',
+  offline: 'hsl(214, calc(var(--saturation-factor, 1) * 9.9%), 50.4%)',
+};
+
 export function Profile({ flags, user, profile }: ProfileProps) {
   return (
     <Card>
@@ -22,10 +29,27 @@ export function Profile({ flags, user, profile }: ProfileProps) {
               {!profile.user.banner && <UserNoBanner fill={profile.user.banner_color ? profile.user.banner_color : data && data[3] ? data[3] : '#6e6e6e'} />}
             </Heading>
             <TopContent>
-              <Avatar>
-                <UserAvatar src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`}></UserAvatar>
-                <UserStatus status={user.discord_status} />
-              </Avatar>
+              <AvatarDiv>
+                <svg width="138" height="100" viewBox="0 0 138 100" aria-hidden="true">
+                  <foreignObject
+                    x="0"
+                    y="0"
+                    width="100"
+                    height="100"
+                    mask={`url(#${user.active_on_discord_mobile && user.discord_status == 'online' ? 'svg-mask-avatar-status-mobile' : 'svg-mask-avatar-status-round'})`}
+                  >
+                    <Avatar>
+                      <img src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`} />
+                    </Avatar>
+                  </foreignObject>
+                  {!user.active_on_discord_mobile && (
+                    <rect width="24" height="24" x="71" y="71" fill={StatusMap[user.discord_status]} mask={`url(#svg-mask-status-${user.discord_status})`} />
+                  )}
+                  {user.active_on_discord_mobile && user.discord_status == 'online' && (
+                    <rect width="24" height="36" x="71" y="60" fill="hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)" mask="url(#svg-mask-status-online-mobile)" />
+                  )}
+                </svg>
+              </AvatarDiv>
               <BadgeDisplay>
                 {flags.map((flag) => (
                   <Badge src={`/badges/${flag}.svg`} />
@@ -69,25 +93,12 @@ const Card = styled.div`
   transition: color 0.15s ease, border-color 0.15s ease;
 `;
 
-const UserAvatar = styled.img`
+const AvatarDiv = styled.div`
+  border-radius: 50%;
   width: 100px;
-  height: auto;
-  border-radius: 50%;
-  margin-left: 15px;
+  height: 100px;
+  margin-left: 10px;
   margin-top: -50px;
-  border: 3px solid #ffffff;
-  z-index: 6;
-`;
-
-const UserStatus = styled.div<{ status: string }>`
-  background-color: ${({ status }) => (status == 'dnd' ? 'red' : status == 'idle' ? 'yellow' : status == 'online' ? 'green' : 'grey')};
-  width: 23px;
-  height: 23px;
-  border-radius: 50%;
-  border: 3px solid #ffffff;
-  margin-left: 84px;
-  margin-top: -25px;
-  z-index: 6;
 `;
 
 const UserBanner = styled.img`
@@ -164,11 +175,13 @@ const Heading = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  z-index: 5;
 `;
 
 const TopContent = styled.div`
   display: flex;
   justify-content: space-between;
+  z-index: 6;
 `;
 
 const BottomContent = styled.div`
