@@ -88,6 +88,7 @@ const Holder = styled.div`
 
   a {
     text-decoration: none;
+    color: rgb(0, 175, 244);
   }
 
   a:hover {
