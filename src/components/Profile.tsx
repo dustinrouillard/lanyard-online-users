@@ -30,27 +30,29 @@ export function Profile({ flags, user, profile }: ProfileProps) {
               {!profile.user.banner && <UserNoBanner fill={profile.user.banner_color ? profile.user.banner_color : data && data[3] ? data[3] : '#6e6e6e'} />}
             </Heading>
             <TopContent>
-              <AvatarDiv>
-                <svg width="128" height="100" viewBox="0 0 138 100" aria-hidden="true">
-                  <foreignObject
-                    x="0"
-                    y="0"
-                    width="100"
-                    height="100"
-                    mask={`url(#${user.active_on_discord_mobile && user.discord_status == 'online' ? 'svg-mask-avatar-status-mobile' : 'svg-mask-avatar-status-round'})`}
-                  >
-                    <Avatar>
-                      <img height="100px" width="100px" src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`} />
-                    </Avatar>
-                  </foreignObject>
-                  {!user.active_on_discord_mobile && (
-                    <rect width="24" height="24" x="71" y="71" fill={StatusMap[user.discord_status]} mask={`url(#svg-mask-status-${user.discord_status})`} />
-                  )}
-                  {user.active_on_discord_mobile && user.discord_status == 'online' && (
-                    <rect width="24" height="36" x="71" y="60" fill={StatusMap[user.discord_status]} mask="url(#svg-mask-status-online-mobile)" />
-                  )}
-                </svg>
-              </AvatarDiv>
+              <AvatarBackground>
+                <AvatarDiv>
+                  <svg width="128" height="100" viewBox="0 0 138 100" aria-hidden="true">
+                    <foreignObject
+                      x="0"
+                      y="0"
+                      width="100"
+                      height="100"
+                      mask={`url(#${user.active_on_discord_mobile && user.discord_status == 'online' ? 'svg-mask-avatar-status-mobile' : 'svg-mask-avatar-status-round'})`}
+                    >
+                      <Avatar>
+                        <img height="100px" width="100px" src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`} />
+                      </Avatar>
+                    </foreignObject>
+                    {!user.active_on_discord_mobile && (
+                      <rect width="24" height="24" x="71" y="71" fill={StatusMap[user.discord_status]} mask={`url(#svg-mask-status-${user.discord_status})`} />
+                    )}
+                    {user.active_on_discord_mobile && user.discord_status == 'online' && (
+                      <rect width="24" height="36" x="71" y="60" fill={StatusMap[user.discord_status]} mask="url(#svg-mask-status-online-mobile)" />
+                    )}
+                  </svg>
+                </AvatarDiv>
+              </AvatarBackground>
               <BadgeDisplay>
                 {flags.map((flag) => (
                   <Badge src={`/badges/${flag}.svg`} />
@@ -108,12 +110,26 @@ const Card = styled.div`
   }
 `;
 
+const AvatarBackground = styled.div`
+  height: 105px;
+  width: 105px;
+  display: flex;
+  margin-top: -53px;
+  margin-left: 9px;
+  background-color: white;
+  border-radius: 50%;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: black;
+  }
+`;
+
 const AvatarDiv = styled.div`
   border-radius: 50%;
   width: 100px;
   height: 100px;
-  margin-left: 15px;
-  margin-top: -50px;
+  margin-left: 6px;
+  margin-top: 2px;
   z-index: 6;
 `;
 
