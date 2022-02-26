@@ -67,6 +67,9 @@ const Card = styled.div`
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
+  @media (prefers-color-scheme: dark) {
+    border: 1px solid #262626;
+  };
 `;
 
 const UserAvatar = styled.img`
@@ -77,6 +80,9 @@ const UserAvatar = styled.img`
   margin-top: -50px;
   border: 3px solid #ffffff;
   z-index: 6;
+  @media (prefers-color-scheme: dark) {
+    border: 3px solid #262626;
+  };
 `;
 
 const UserStatus = styled.div<{ status: string }>`
@@ -88,6 +94,9 @@ const UserStatus = styled.div<{ status: string }>`
   margin-left: 84px;
   margin-top: -25px;
   z-index: 6;
+  @media (prefers-color-scheme: dark) {
+    border: 1px solid #262626;
+  };
 `;
 
 const UserBanner = styled.img`
@@ -110,6 +119,9 @@ const Username = styled.h2`
   font-size: 1.2rem;
   margin-left: 20px;
   display: flex;
+  @media (prefers-color-scheme: dark) {
+    color: #ffffff;
+  };
 `;
 
 const Discriminator = styled.h2`
@@ -117,6 +129,9 @@ const Discriminator = styled.h2`
   opacity: 0.6;
   font-size: 1.2rem;
   margin: 0;
+  @media (prefers-color-scheme: dark) {
+    color: #ffffff;
+  };
 `;
 
 const Badge = styled.img`
