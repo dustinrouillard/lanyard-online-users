@@ -24,7 +24,7 @@ export function Activity(props: ActivityProps) {
       return () => {
         clearInterval(int);
       };
-    }
+    } else setCurrentActivity(null);
   }, [props.user]);
 
   return !!currentActivity ? (
