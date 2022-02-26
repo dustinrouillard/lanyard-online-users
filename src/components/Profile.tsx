@@ -4,6 +4,7 @@ import { Palette } from 'color-thief-react';
 import { UserProfile } from '../types/dcdn';
 import { LanyardPresence } from '../types/lanyard';
 import { Bio } from './Bio';
+import { Activity } from './Activity';
 
 interface ProfileProps {
   flags: string[];
@@ -73,6 +74,7 @@ export function Profile({ flags, user, profile }: ProfileProps) {
               </CustomStatus>
             )}
             {profile.user.bio && <Bio bio={profile.user.bio} />}
+            <Activity user={user} />
           </>
         )}
       </Palette>
@@ -91,6 +93,7 @@ const Card = styled.div`
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
+  padding-bottom: 20px;
 
   @media (prefers-color-scheme: dark) {
     border: 1px solid #262626;
@@ -124,7 +127,7 @@ const UserNoBanner = styled.div<{ fill?: string }>`
 const Username = styled.h2`
   color: #000000;
   font-size: 1.2rem;
-  margin-left: 20px;
+  margin-left: 15px;
   display: flex;
 
   @media (prefers-color-scheme: dark) {
@@ -163,7 +166,7 @@ const BadgeDisplay = styled.div`
 const CustomStatus = styled.p`
   font-size: 0.9rem;
   margin: 0;
-  margin-left: 20px;
+  margin-left: 15px;
   display: flex;
   align-items: center;
 `;

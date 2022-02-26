@@ -1,24 +1,25 @@
+import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
-import rehypeExternalLinks from 'rehype-external-links';
-import rehypeStringify from 'rehype-stringify';
-import remarkBreaks from 'remark-breaks';
+import { unified } from 'unified';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
+import remarkBreaks from 'remark-breaks';
+import rehypeStringify from 'rehype-stringify';
+import rehypeExternalLinks from 'rehype-external-links';
 
-import styled from 'styled-components';
-import { unified } from 'unified';
 import { automaticRelativeDifference } from '../utils/time';
 
+const Navigator = typeof navigator != 'undefined' ? navigator : null;
 const Formatters: { [key: string]: Intl.DateTimeFormat | Intl.RelativeTimeFormat } = {
-  t: new Intl.DateTimeFormat(typeof navigator != 'undefined' ? navigator.language : 'en', { timeStyle: 'short' }),
-  T: new Intl.DateTimeFormat(typeof navigator != 'undefined' ? navigator.language : 'en', { timeStyle: 'medium' }),
-  d: new Intl.DateTimeFormat(typeof navigator != 'undefined' ? navigator.language : 'en', { dateStyle: 'short' }),
-  D: new Intl.DateTimeFormat(typeof navigator != 'undefined' ? navigator.language : 'en', { dateStyle: 'long' }),
-  f: new Intl.DateTimeFormat(typeof navigator != 'undefined' ? navigator.language : 'en', { dateStyle: 'long', timeStyle: 'short' }),
-  F: new Intl.DateTimeFormat(typeof navigator != 'undefined' ? navigator.language : 'en', { dateStyle: 'full', timeStyle: 'short' }),
-  R: new Intl.RelativeTimeFormat(typeof navigator != 'undefined' ? navigator.language : 'en', { style: 'long', numeric: 'auto' }),
+  t: new Intl.DateTimeFormat(Navigator?.language || 'en', { timeStyle: 'short' }),
+  T: new Intl.DateTimeFormat(Navigator?.language || 'en', { timeStyle: 'medium' }),
+  d: new Intl.DateTimeFormat(Navigator?.language || 'en', { dateStyle: 'short' }),
+  D: new Intl.DateTimeFormat(Navigator?.language || 'en', { dateStyle: 'long' }),
+  f: new Intl.DateTimeFormat(Navigator?.language || 'en', { dateStyle: 'long', timeStyle: 'short' }),
+  F: new Intl.DateTimeFormat(Navigator?.language || 'en', { dateStyle: 'full', timeStyle: 'short' }),
+  R: new Intl.RelativeTimeFormat(Navigator?.language || 'en', { style: 'long', numeric: 'auto' }),
 };
 
 export function Bio({ bio }: { bio: string }) {
@@ -44,6 +45,7 @@ export function Bio({ bio }: { bio: string }) {
         text = text.replace(match[0], `\`${formatter.format(new Date(~~timestamp * 1000))}\``);
       }
     }
+
     const file = await unified()
       .use(remarkParse)
       .use(remarkBreaks)
@@ -52,6 +54,7 @@ export function Bio({ bio }: { bio: string }) {
       .use(rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer', 'nofollow'] })
       .use(rehypeStringify)
       .process(text);
+
     setData(file.toString());
   }
 
@@ -70,10 +73,11 @@ export function Bio({ bio }: { bio: string }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 15px 20px 0 20px;
+  margin: 15px 10px 0 15px;
 `;
 
-const Heading = styled.p`
+const Heading = styled.h3`
+  font-size: 14px;
   margin: 0;
   opacity: 0.6;
 `;
@@ -98,6 +102,10 @@ const Holder = styled.div`
   img {
     height: 16px;
     margin-bottom: -2px;
+  }
+
+  p {
+    margin-bottom: 2px;
   }
 
   a {

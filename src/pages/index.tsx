@@ -1,12 +1,12 @@
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
-import { UserProfile } from '../types/dcdn';
-import { LanyardPresence } from '../types/lanyard';
-import { processFlags } from '../utils/flags';
 import { lanyard } from '../utils/lanyard';
+import { UserProfile } from '../types/dcdn';
+import { processFlags } from '../utils/flags';
 import { Profile } from '../components/Profile';
+import { LanyardPresence } from '../types/lanyard';
 
 const WatchedUsers = [
   '94490510688792576', // Phineas
@@ -140,11 +140,10 @@ const Description = styled.p<{ smaller?: boolean; 'no-margin'?: boolean; lighter
 
 const Grid = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  max-width: 1024px;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-
-  max-width: 1024px;
 
   @media (max-width: 600px) {
     width: 100%;
