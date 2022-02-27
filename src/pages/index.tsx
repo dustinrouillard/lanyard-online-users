@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 
 import { lanyard } from '../utils/lanyard';
 import { UserProfile } from '../types/dcdn';
-import { processFlags } from '../utils/flags';
 import { Profile } from '../components/Profile';
 import { LanyardPresence } from '../types/lanyard';
 import { WatchedUsers } from '../users';
@@ -76,9 +75,7 @@ export default function Home() {
               const profile = userProfiles.find((profile) => profile.user.id == id);
               if (!profile || !user) return;
 
-              const flags = processFlags(user.discord_user.public_flags, !!profile.premium_since);
-
-              return <Profile flags={flags} profile={profile} user={user} />;
+              return <Profile profile={profile} user={user} />;
             })}
         </Grid>
       </Main>

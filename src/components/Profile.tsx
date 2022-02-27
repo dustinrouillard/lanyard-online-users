@@ -5,9 +5,9 @@ import { UserProfile } from '../types/dcdn';
 import { LanyardPresence } from '../types/lanyard';
 import { Bio } from './Bio';
 import { Activity } from './Activity';
+import { ProcessBadges } from './Icons/Badges';
 
 interface ProfileProps {
-  flags: string[];
   user: LanyardPresence;
   profile: UserProfile;
 }
@@ -19,7 +19,7 @@ const StatusMap = {
   offline: 'hsl(214, calc(var(--saturation-factor, 1) * 9.9%), 50.4%)',
 };
 
-export function Profile({ flags, user, profile }: ProfileProps) {
+export function Profile({ user, profile }: ProfileProps) {
   return (
     <Card>
       <Palette src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`} crossOrigin="anonymous" format="hex" colorCount={4}>
@@ -54,9 +54,7 @@ export function Profile({ flags, user, profile }: ProfileProps) {
                 </AvatarDiv>
               </AvatarBackground>
               <BadgeDisplay>
-                {flags.map((flag) => (
-                  <Badge src={`/badges/${flag}.svg`} />
-                ))}
+                <ProcessBadges flags={user.discord_user.public_flags} nitro={!!profile.premium_since} />
               </BadgeDisplay>
             </TopContent>
             <BottomContent>
@@ -170,19 +168,13 @@ const Discriminator = styled.h2`
   }
 `;
 
-const Badge = styled.img`
-  width: 20px;
-  height: 20px;
-  margin: 0 0 0 4px;
-`;
-
 const BadgeDisplay = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-right: 15px;
   margin-top: 10px;
-  max-width: 240px;
+  max-width: 170px;
   justify-content: flex-end;
   flex-wrap: wrap;
 `;

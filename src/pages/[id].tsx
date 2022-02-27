@@ -7,6 +7,7 @@ import { LanyardPresence } from '../types/lanyard';
 import { processFlags } from '../utils/flags';
 import { Profile } from '../components/Profile';
 import { useRouter } from 'next/router';
+import { lanyard } from '../utils/lanyard';
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -22,8 +23,25 @@ export default function ProfilePage() {
     setUser(user.data);
   }
 
+  async function presenceChange(presence: LanyardPresence, id: string) {
+    if (presence.discord_user.id == id) {
+      setUser(presence);
+
+      const profile = await fetch(`https://dcdn.dstn.to/profile/${id}`).then((r) => r.json());
+      setProfile(profile);
+    }
+  }
+
   useEffect(() => {
-    if (router.query.id) fetchProfileAndUser(router.query.id as string);
+    if (router.query.id) {
+      fetchProfileAndUser(router.query.id as string);
+
+      lanyard.on('presence', (presence) => presenceChange(presence, router.query.id as string));
+
+      return () => {
+        lanyard.removeListener('presence', (presence) => presenceChange(presence, router.query.id as string));
+      };
+    }
   }, [router.query.id]);
 
   return (
@@ -33,7 +51,7 @@ export default function ProfilePage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Main>{user && profile && <Profile flags={processFlags(user.discord_user.public_flags, !!profile.premium_since)} profile={profile} user={user} />}</Main>
+      <Main>{user && profile && <Profile profile={profile} user={user} />}</Main>
 
       <Footer>
         <Link href="https://github.com/dustinrouillard/lanyard-online-users" target="_blank" rel="noopener noreferrer">
