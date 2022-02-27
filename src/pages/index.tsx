@@ -7,18 +7,7 @@ import { UserProfile } from '../types/dcdn';
 import { processFlags } from '../utils/flags';
 import { Profile } from '../components/Profile';
 import { LanyardPresence } from '../types/lanyard';
-
-const WatchedUsers = [
-  '94490510688792576', // Phineas
-  '156114103033790464', // Dustin
-  '338718840873811979', // pxseu
-  '83281345949728768', // Tim
-  '819287687121993768', // Lanyard
-  '911655061594202192', // Shoko Makinohara
-  '218972931701735424', // Voltages
-  '325414558623858698', // Atzu
-  '597170794111434753' // stealthwave
-];
+import { WatchedUsers } from '../users';
 
 export default function Home() {
   const [onlineUsers, setOnlineUsers] = useState<Number>(0);
