@@ -29,6 +29,7 @@ export function Bio({ bio }: { bio: string }) {
     let text = bio
       .replace(/_  _/g, '&nbsp;&nbsp;')
       .replace(/\\/g, '')
+      .replace(/- /g, '\\- ')
       .replace(/(?:<?.:\S*:)(\d*)(?:>)/g, `![](https://cdn.discordapp.com/emojis/$1)`);
 
     // Timestamps
