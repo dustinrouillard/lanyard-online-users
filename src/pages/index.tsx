@@ -16,6 +16,8 @@ const WatchedUsers = [
   '819287687121993768', // Lanyard
   '911655061594202192', // Shoko Makinohara
   '218972931701735424', // Voltages
+  '325414558623858698', // Atzu
+
 ];
 
 export default function Home() {
