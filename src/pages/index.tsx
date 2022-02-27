@@ -17,7 +17,7 @@ const WatchedUsers = [
   '911655061594202192', // Shoko Makinohara
   '218972931701735424', // Voltages
   '325414558623858698', // Atzu
-
+  '597170794111434753' // stealthwave
 ];
 
 export default function Home() {
