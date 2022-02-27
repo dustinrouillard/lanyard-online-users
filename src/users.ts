@@ -8,4 +8,5 @@ export const WatchedUsers = [
   '218972931701735424', // Voltages
   '325414558623858698', // Atzu
   '597170794111434753', // stealthwave
+  '261867055869853697', // Ewan
 ];
