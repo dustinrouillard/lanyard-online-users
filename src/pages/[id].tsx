@@ -1,57 +1,19 @@
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-
-import { UserProfile } from '../types/dcdn';
-import { LanyardPresence } from '../types/lanyard';
-import { processFlags } from '../utils/flags';
-import { Profile } from '../components/Profile';
 import { useRouter } from 'next/router';
-import { lanyard } from '../utils/lanyard';
+import { Card } from 'lanyard-card';
+import styled from 'styled-components';
 
 export default function ProfilePage() {
   const router = useRouter();
 
-  const [profile, setProfile] = useState<UserProfile>();
-  const [user, setUser] = useState<LanyardPresence>();
-
-  async function fetchProfileAndUser(id: string) {
-    const user = await fetch(`https://api.lanyard.rest/v1/users/${id}`).then((r) => r.json());
-    const profile = await fetch(`https://dcdn.dstn.to/profile/${id}`).then((r) => r.json());
-
-    setProfile(profile);
-    setUser(user.data);
-  }
-
-  async function presenceChange(presence: LanyardPresence, id: string) {
-    if (presence.discord_user.id == id) {
-      setUser(presence);
-
-      const profile = await fetch(`https://dcdn.dstn.to/profile/${id}`).then((r) => r.json());
-      setProfile(profile);
-    }
-  }
-
-  useEffect(() => {
-    if (router.query.id) {
-      fetchProfileAndUser(router.query.id as string);
-
-      lanyard.on('presence', (presence) => presenceChange(presence, router.query.id as string));
-
-      return () => {
-        lanyard.removeListener('presence', (presence) => presenceChange(presence, router.query.id as string));
-      };
-    }
-  }, [router.query.id]);
-
   return (
     <Container>
       <Head>
-        <title>Lanyard User - {user?.discord_user?.username}</title>
+        <title>Lanyard User - {router.query.id}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Main>{user && profile && <Profile profile={profile} user={user} />}</Main>
+      <Main>{router.query.id && <Card id={router.query.id as string} />}</Main>
 
       <Footer>
         <Link href="https://github.com/dustinrouillard/lanyard-online-users" target="_blank" rel="noopener noreferrer">

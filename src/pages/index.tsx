@@ -2,50 +2,26 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
+import { Card } from 'lanyard-card';
+
 import { lanyard } from '../utils/lanyard';
-import { UserProfile } from '../types/dcdn';
-import { Profile } from '../components/Profile';
 import { LanyardPresence } from '../types/lanyard';
 import { WatchedUsers } from '../users';
 
 export default function Home() {
   const [onlineUsers, setOnlineUsers] = useState<Number>(0);
   const [totalUsers, setTotalUsers] = useState<Number>(0);
-  const [userProfiles, setUserProfiles] = useState<UserProfile[]>([]);
-  const [lastCalledProfiles, setLastCalledProfiles] = useState<{ id: string; date: Date }[]>([]);
 
   function usersChange(users: Map<string, LanyardPresence>) {
     setTotalUsers(users.size);
     setOnlineUsers([...users.values()].filter((user) => user.discord_status != 'offline').length);
   }
 
-  async function presenceChange(presence: LanyardPresence) {
-    let lastCalledProfile;
-    if (!WatchedUsers.includes(presence.discord_user.id)) return;
-
-    setLastCalledProfiles((previous) => {
-      lastCalledProfile = previous.find((last) => last.id == presence.discord_user.id);
-      if (lastCalledProfile && new Date().getTime() - lastCalledProfile.date.getTime() < 30000) return previous;
-
-      const all = previous.filter((last) => last.id != presence.discord_user.id);
-      return [...all, { id: presence.discord_user.id, date: new Date() }];
-    });
-
-    if (lastCalledProfile && new Date().getTime() - lastCalledProfile.date.getTime() < 30000) return;
-    const profile: UserProfile = await fetch(`https://dcdn.dstn.to/profile/${presence.discord_user.id}`).then((r) => r.json());
-    setUserProfiles((previous) => {
-      const all = previous.filter((Profile) => Profile.user.id != presence.discord_user.id);
-      return [...all, profile];
-    });
-  }
-
   useEffect(() => {
     lanyard.on('change', usersChange);
-    lanyard.on('presence', presenceChange);
 
     return () => {
       lanyard.removeListener('change', usersChange);
-      lanyard.removeListener('presence', presenceChange);
     };
   }, []);
 
@@ -71,11 +47,7 @@ export default function Home() {
         <Grid>
           {lanyard.users &&
             WatchedUsers.map((id) => {
-              const user = lanyard.users.get(id);
-              const profile = userProfiles.find((profile) => profile.user.id == id);
-              if (!profile || !user) return;
-
-              return <Profile profile={profile} user={user} />;
+              return <Card id={id} />;
             })}
         </Grid>
       </Main>
