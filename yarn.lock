@@ -795,10 +795,10 @@ jsprim@^1.2.2:
     json-schema "0.4.0"
     verror "1.10.0"
 
-lanyard-card@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/lanyard-card/-/lanyard-card-1.0.1.tgz#e7a23a6ddba8645afd6fa2834a32daeb7b79941c"
-  integrity sha512-i2tcuAC81arfIuPMWCOeGq8O5T+w+hz1N4mGZWIH9f9LrzLZnc2nvmehCL7CewJEZrR0IcRz6qZe51iXZo2Vzw==
+lanyard-card@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/lanyard-card/-/lanyard-card-1.0.2.tgz#af778844d05c6df4a6cf3b61f3acb40eced852ff"
+  integrity sha512-MpLQRF0KfZSeXvAFkHfJonXK0t+YZulR3qn/ZgvhwZKklVvRApx/wO2WyYHh7PGZUT+EvYvGIqrWHG6nerSwWg==
   dependencies:
     color-thief-react "^2.1.0"
     react-responsive "^9.0.0-beta.6"
