@@ -13,4 +13,5 @@ export const WatchedUsers = [
   '734176332308676638', //Malik
   '694604709591384226', //IThundxr
   '811770910624579584', // French Cat
+  '1019641343875760350', //Snip
 ];
