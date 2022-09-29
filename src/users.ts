@@ -15,4 +15,5 @@ export const WatchedUsers = [
   '811770910624579584', // French Cat
   '1019641343875760350', //Snip
   '546303073962950657', //selim1337
+  '173557815326015488', // GravityExploitz
 ];
