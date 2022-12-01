@@ -16,4 +16,5 @@ export const WatchedUsers = [
   '1019641343875760350', //Snip
   '546303073962950657', //selim1337
   '173557815326015488', // GravityExploitz
+  '287218738242125826', // Aaron
 ];
